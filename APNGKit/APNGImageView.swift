@@ -26,6 +26,10 @@
 
 import UIKit
 
+public protocol APNGImageViewDelegate: class {
+    func apngImageViewWillFinishAnimating(imageView: APNGImageView)
+}
+
 /// An APNG image view object provides a view-based container for displaying an APNG image.
 /// You can control the starting and stopping of the animation, as well as the repeat count.
 /// All images associated with an APNGImageView object should use the same scale. 
@@ -50,6 +54,8 @@ public class APNGImageView: UIView {
             }
         }
     }
+    
+    public weak var delegate: APNGImageViewDelegate? = nil
     
     /// A Bool value indicating whether the animation is running.
     public private(set) var isAnimating: Bool
@@ -198,6 +204,7 @@ public class APNGImageView: UIView {
                 repeated = repeated + 1
                 
                 if image.repeatCount != RepeatForever && repeated >= image.repeatCount {
+                    delegate?.apngImageViewWillFinishAnimating(self)
                     stopAnimating()
                     // Stop in the last frame
                     return

@@ -26,7 +26,7 @@
 
 import UIKit
 
-public protocol APNGImageViewDelegate: class {
+@objc public protocol APNGImageViewDelegate: NSObjectProtocol {
     func apngImageViewWillFinishAnimating(imageView: APNGImageView)
 }
 
